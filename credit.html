@@ -1,24 +1,691 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=F, initial-scale=1.0" />
-    <title>VOLKSWAGEN</title>
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-  <header><div class="content">
-      <div class="logo"><img src="https://car-logos.b-cdn.net/wp-content/uploads/2023/03/volkswagen-logo-2020-present-1024x742.webp" alt=""></div>
-      <div class="menu">
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Кредитний калькулятор VOLKSWAGEN</title>
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    .credit-conditions {
+      background: linear-gradient(180deg, #061f39 0%, #0d2a45 100%);
+      color: #fff;
+      padding: 54px 20px 42px;
+      width: 100%;
+    }
+
+    .credit-conditions-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .credit-conditions h1 {
+      margin: 0 0 18px;
+      text-align: center;
+      font-size: clamp(2.6rem, 5vw, 5rem);
+      line-height: 1.08;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .credit-conditions .subtitle {
+      margin: 0 auto 34px;
+      max-width: 980px;
+      text-align: center;
+      font-size: clamp(1.1rem, 2vw, 2rem);
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+    }
+
+    .credit-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .credit-panel {
+      background: rgba(18, 56, 86, 0.82);
+      border: 1px solid rgba(116, 181, 255, 0.32);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .credit-panel.left-panel {
+      padding: 0;
+    }
+
+    .credit-panel h2 {
+      font-size: clamp(2rem, 3vw, 3rem);
+      margin: 0;
+      padding: 22px 26px 18px;
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .param-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .param-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(160px, 0.8fr);
+      align-items: center;
+      gap: 18px;
+      min-height: 92px;
+      padding: 0 28px;
+      border-top: 1px solid rgba(163, 196, 255, 0.18);
+    }
+
+    .param-row:first-child {
+      border-top: none;
+    }
+
+    .param-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-size: clamp(1.05rem, 1.9vw, 2rem);
+      font-weight: 500;
+      color: rgba(255,255,255,0.92);
+      line-height: 1.2;
+    }
+
+    .param-icon {
+      width: 46px;
+      height: 46px;
+      min-width: 46px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(158, 211, 255, 0.7);
+      background: rgba(110, 169, 230, 0.15);
+      font-size: 1.4rem;
+      color: #dfeefe;
+    }
+
+    .param-value {
+      text-align: right;
+      font-size: clamp(1.05rem, 1.8vw, 2rem);
+      font-weight: 700;
+      color: #f4f9ff;
+      white-space: nowrap;
+    }
+
+    .benefits-panel {
+      padding: 0 0 8px;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      padding: 0 18px 18px;
+    }
+
+    .benefit-card {
+      min-height: 122px;
+      background: linear-gradient(180deg, rgba(84, 156, 218, 0.24), rgba(55, 117, 180, 0.18));
+      border: 1px solid rgba(150, 206, 255, 0.24);
+      border-radius: 18px;
+      padding: 18px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #fff;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .benefit-icon {
+      width: 58px;
+      height: 58px;
+      min-width: 58px;
+      border-radius: 50%;
+      background: rgba(143, 196, 255, 0.24);
+      border: 2px solid rgba(196, 227, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #dff3ff;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+    }
+
+    .benefit-text {
+      font-size: clamp(1.05rem, 1.6vw, 1.7rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: #f6fbff;
+    }
+
+    .benefit-text small {
+      display: block;
+      font-size: 0.74em;
+      margin-top: 6px;
+      color: rgba(226, 240, 255, 0.8);
+      font-weight: 500;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #1e2b3c 0%, #3a506b 100%);
+    }
+
+    .calc-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      padding: 40px;
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .calc-inputs, .calc-results {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .calc-inputs h1 {
+      margin-top: 0;
+      font-size: 28px;
+      color: #1a2530;
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      margin-bottom: 25px;
+    }
+
+    .input-group label {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 10px;
+    }
+
+    .input-value {
+      color: #3f87b8;
+      font-size: 18px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #3f87b8;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(63, 135, 184, 0.4);
+      transition: transform 0.1s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+
+    .calc-results {
+      background: linear-gradient(135deg, #3f87b8 0%, #1a2530 100%);
+      border-radius: 15px;
+      padding: 30px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .result-item {
+      margin-bottom: 20px;
+    }
+
+    .result-item h3 {
+      font-weight: 400;
+      font-size: 16px;
+      margin: 0 0 10px 0;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .result-item .money {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .result-item.small .money {
+      font-size: 24px;
+    }
+
+    .action-btn {
+      background: #ff5a5f;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.1s;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .action-btn:hover {
+      background: #ff3b41;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 1100px) {
+      .credit-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .benefits-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .burger {
+        display: flex;
+      }
+
+      .menu {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        left: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        background: rgba(15, 76, 129, 0.97);
+        padding: 16px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      }
+
+      .menu-toggle:checked ~ .menu {
+        display: flex;
+      }
+
+      .menu ul,
+      .header-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .header-button {
+        width: 100%;
+        display: block;
+      }
+
+      .credit-conditions {
+        padding: 38px 16px 28px;
+      }
+
+      .credit-conditions h1 {
+        font-size: clamp(2.1rem, 8vw, 3.2rem);
+      }
+
+      .credit-conditions .subtitle {
+        font-size: 1rem;
+      }
+
+      .credit-panel h2 {
+        font-size: clamp(1.5rem, 6vw, 2.2rem);
+        padding: 18px 18px 14px;
+      }
+
+      .param-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 18px 18px;
+        min-height: auto;
+      }
+
+      .param-value {
+        text-align: left;
+        white-space: normal;
+      }
+
+      .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 0 14px 14px;
+      }
+
+      .benefit-card {
+        min-height: 90px;
+        padding: 14px 12px;
+      }
+
+      .benefit-text {
+        font-size: 1.05rem;
+      }
+
+      .calc-container {
+        padding: 24px 18px;
+        gap: 24px;
+      }
+
+      .calc-inputs, .calc-results {
+        min-width: 0;
+        width: 100%;
+      }
+
+      .calc-inputs h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .input-group label {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .result-item .money {
+        font-size: 28px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .credit-conditions {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .param-label {
+        gap: 10px;
+        font-size: 1rem;
+      }
+
+      .param-icon,
+      .benefit-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        font-size: 1.2rem;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="content">
+      <div class="logo">
+        <a href="index.html">
+          <img src="https://car-logos.b-cdn.net/wp-content/uploads/2023/03/volkswagen-logo-2020-present-1024x742.webp" alt="VW Logo">
+        </a>
+      </div>
+      <input type="checkbox" id="menuToggle" class="menu-toggle" aria-hidden="true" />
+      <label class="burger" for="menuToggle" aria-label="Відкрити меню">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <nav class="menu" aria-label="Головне меню">
         <ul>
-          <li><a href="/">Головна</a></li>
-          <li>Контакти</li>
-          <li>Про сайт</li>
+          <li><a class="header-button" href="index.html">Головна</a></li>
+          <li><a class="header-button" href="#contacts">Контакти</a></li>
         </ul>
-    </header></div><footer>
-      <div class="footer-content">
-        <p>&copy; 2025 Мій сайт Всі права захищено</p>
-        <p>пошта:volkswagen@gmail.com</p>
-    </footer></div>
-  </body>
+        <div class="header-buttons">
+          <a class="header-button" href="servise.html">Сервіс</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="credit-conditions" aria-label="Умови кредитування">
+    <div class="credit-conditions-inner">
+      <h1>Умови кредитування</h1>
+      <p class="subtitle">Прозорі умови та гнучкі можливості для придбання вашого нового автомобіля.</p>
+
+      <div class="credit-layout">
+        <div class="credit-panel left-panel">
+          <h2>Параметри кредиту</h2>
+
+          <div class="param-list">
+            <div class="param-row">
+              <div class="param-label"><span class="param-icon">🚗</span>Вартість авто</div>
+              <div class="param-value">100 000 – 2 000 000 грн</div>
+            </div>
+            <div class="param-row">
+              <div class="param-label"><span class="param-icon">💰</span>Початковий внесок</div>
+              <div class="param-value">від 20%</div>
+            </div>
+            <div class="param-row">
+              <div class="param-label"><span class="param-icon">📅</span>Термін кредиту</div>
+              <div class="param-value">від 12 до 84 місяців</div>
+            </div>
+            <div class="param-row">
+              <div class="param-label"><span class="param-icon">%</span>Процентна ставка</div>
+              <div class="param-value">від 9,9% річних</div>
+            </div>
+            <div class="param-row">
+              <div class="param-label"><span class="param-icon">🛡️</span>Каско (необов'язково)</div>
+              <div class="param-value">від 5%</div>
+            </div>
+            <div class="param-row">
+              <div class="param-label"><span class="param-icon">💳</span>Сума кредиту до</div>
+              <div class="param-value">90% вартості авто</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="credit-panel benefits-panel">
+          <h2>Що ви отримаєте</h2>
+
+          <div class="benefits-grid">
+            <div class="benefit-card">
+              <div class="benefit-icon">⚡</div>
+              <div class="benefit-text">Швидке рішення<small>від 1 години</small></div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">%</div>
+              <div class="benefit-text">Дострокове погашення<small>без штрафів</small></div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">📄</div>
+              <div class="benefit-text">Мінімум документів<small>тільки паспорт та ІПН</small></div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">🤝</div>
+              <div class="benefit-text">Індивідуальний підхід<small>персональний менеджер</small></div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">🚗</div>
+              <div class="benefit-text">Авто у заставі<small>ви залишитеся власником</small></div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">✅</div>
+              <div class="benefit-text">Страхування життя<small>захист для вас і родини</small></div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">📊</div>
+              <div class="benefit-text">Гнучкі умови<small>підбір графіку платежів</small></div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">💳</div>
+              <div class="benefit-text">Зручні способи оплати<small>онлайн, термінал, банк</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <div class="calc-container">
+      <div class="calc-inputs">
+        <h1>Кредитний калькулятор</h1>
+        
+        <div class="input-group">
+          <label>Вартість авто <span class="input-value" id="valPrice">500 000 ₴</span></label>
+          <input type="range" id="carPrice" min="100000" max="3000000" step="10000" value="500000">
+        </div>
+
+        <div class="input-group">
+          <label>Початковий внесок <span class="input-value" id="valDownPayment">100 000 ₴</span></label>
+          <input type="range" id="downPayment" min="0" max="2500000" step="10000" value="100000">
+        </div>
+
+        <div class="input-group">
+          <label>Термін кредиту (міс) <span class="input-value" id="valTerm">36 міс.</span></label>
+          <input type="range" id="loanTerm" min="6" max="84" step="6" value="36">
+        </div>
+
+        <div class="input-group">
+          <label>Процентна ставка (%) <span class="input-value" id="valRate">12.5%</span></label>
+          <input type="range" id="interestRate" min="0.1" max="25" step="0.1" value="12.5">
+        </div>
+      </div>
+
+      <div class="calc-results">
+        <div>
+          <div class="result-item">
+            <h3>Щомісячний платіж</h3>
+            <p class="money" id="resMonthly">0 ₴</p>
+          </div>
+          <div class="result-item small">
+            <h3>Сума кредиту</h3>
+            <p class="money" id="resLoanAmount">0 ₴</p>
+          </div>
+          <div class="result-item small">
+            <h3>Переплата (відсотки)</h3>
+            <p class="money" id="resTotalInterest">0 ₴</p>
+          </div>
+        </div>
+        <button class="action-btn" onclick="alert('Заявка на кредит відправлена!')">Залишити заявку</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content" id="contacts">
+      <div class="footer-text">
+        <p>&copy; 2025 Мій сайт. Всі права захищено</p>
+        <p>пошта: vw.autoshop.ua@gmail.com</p>
+      </div>
+      <div class="social-links" aria-label="Соціальні мережі">
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <img src="images/futer image/f.png" alt="Facebook" />
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <img src="images/futer image/inst.png" alt="Instagram" />
+        </a>
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <img src="images/futer image/in.png" alt="LinkedIn" />
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+          <img src="images/futer image/t.png" alt="Twitter" />
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="index.js"></script>
+  <script>
+    // Логіка калькулятора
+    const carPriceInput = document.getElementById('carPrice');
+    const downPaymentInput = document.getElementById('downPayment');
+    const loanTermInput = document.getElementById('loanTerm');
+    const interestRateInput = document.getElementById('interestRate');
+
+    const valPrice = document.getElementById('valPrice');
+    const valDownPayment = document.getElementById('valDownPayment');
+    const valTerm = document.getElementById('valTerm');
+    const valRate = document.getElementById('valRate');
+
+    const resMonthly = document.getElementById('resMonthly');
+    const resLoanAmount = document.getElementById('resLoanAmount');
+    const resTotalInterest = document.getElementById('resTotalInterest');
+
+    const formatCurrency = (amount) => {
+      return new Intl.NumberFormat('uk-UA', { style: 'currency', currency: 'UAH', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
+    };
+
+    function calculate() {
+      const price = parseFloat(carPriceInput.value);
+      let downPayment = parseFloat(downPaymentInput.value);
+      const term = parseInt(loanTermInput.value);
+      const rate = parseFloat(interestRateInput.value);
+
+      // Забезпечуємо, щоб початковий внесок не перевищував ціну авто
+      if (downPayment >= price) {
+        downPayment = price * 0.9; // Обмежуємо початковий внесок 90%
+        downPaymentInput.value = downPayment;
+      }
+
+      // Оновлюємо максимальне значення для початкового внеску
+      downPaymentInput.max = price;
+
+      valPrice.textContent = formatCurrency(price);
+      valDownPayment.textContent = formatCurrency(downPayment);
+      valTerm.textContent = `${term} міс.`;
+      valRate.textContent = `${rate}%`;
+
+      const loanAmount = price - downPayment;
+      resLoanAmount.textContent = formatCurrency(loanAmount);
+
+      if (loanAmount <= 0) {
+        resMonthly.textContent = formatCurrency(0);
+        resTotalInterest.textContent = formatCurrency(0);
+        return;
+      }
+
+      const monthlyRate = rate / 100 / 12;
+      let monthlyPayment = 0;
+      let totalInterest = 0;
+
+      if (monthlyRate === 0) {
+        monthlyPayment = loanAmount / term;
+        totalInterest = 0;
+      } else {
+        const mathPower = Math.pow(1 + monthlyRate, term);
+        monthlyPayment = loanAmount * (monthlyRate * mathPower) / (mathPower - 1);
+        totalInterest = (monthlyPayment * term) - loanAmount;
+      }
+
+      resMonthly.textContent = formatCurrency(monthlyPayment);
+      resTotalInterest.textContent = formatCurrency(totalInterest);
+    }
+
+    [carPriceInput, downPaymentInput, loanTermInput, interestRateInput].forEach(input => {
+      input.addEventListener('input', calculate);
+    });
+
+    // Початковий розрахунок
+    calculate();
+  </script>
+</body>
 </html>

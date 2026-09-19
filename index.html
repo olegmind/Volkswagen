@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VOLKSWAGEN — Нові авто 2025, кредит, trade-in, сервіс</title>
+    <title> кредит, сервіс</title>
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
@@ -12,52 +12,82 @@
         <div class="logo">
           <img src="https://car-logos.b-cdn.net/wp-content/uploads/2023/03/volkswagen-logo-2020-present-1024x742.webp" alt="Логотип Volkswagen" />
         </div>
+        <input type="checkbox" id="menuToggle" class="menu-toggle" aria-hidden="true" />
+        <label class="burger" for="menuToggle" aria-label="Відкрити меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
         <nav class="menu" aria-label="Головне меню">
           <ul>
-            <li><a href="/">Головна</a></li>
-            <li><a href="#contacts">Контакти</a></li>
-            <li><a href="#about">Про сайт</a></li>
+            <li><a class="header-button" href="index.html">Головна</a></li>
+            <li><a class="header-button" href="#contacts">Контакти</a></li>
+            <a class="header-button" href="credit.html">Кредит</a>
+            <a class="header-button" href="servise.html">Сервіс</a>
           </ul>
         </nav>
+
+        <div class="header-actions">
+          <div class="currency-panel-header">
+            <label for="currencySelect">Валюта цін:</label>
+            <select id="currencySelect" aria-label="Оберіть валюту"></select>
+            <span id="rateInfo"></span>
+          </div>
+
+          <div class="header-cart-area">
+            <button class="header-cart-button" id="headerCartButton" type="button" aria-label="Відкрити кошик" aria-expanded="false">
+              <span class="header-cart-icon">🛒</span>
+              <span class="header-cart-text">Кошик</span>
+              <span id="cartBadge" class="cart-badge" hidden>0</span>
+            </button>
+          </div>
+        </div>
       </div>
     </header>
 
-    <main id="main">
-      <section class="main">
-        <h1>Нові Volkswagen 2025</h1>
-        <p>Відкрийте для себе інноваційні технології та неперевершений комфорт</p>
-        <a href="new .html"><button type="button">Дізнатися більше</button></a>
+    <div id="cartOverlay" class="cart-overlay" aria-hidden="true"></div>
+
+    <aside id="cartDrawer" class="cart-drawer" aria-label="Кошик" aria-live="polite">
+      <div class="cart-drawer-header">
+        <h3>🛒 Кошик</h3>
+        <button id="closeCartButton" class="close-cart-button" type="button" aria-label="Закрити кошик">Закрити</button>
+      </div>
+
+      <div id="cartEmptyState" class="cart-empty-state">
+        <p>Ваш кошик порожній</p>
+        <button id="continueShoppingButton" type="button" class="secondary-button">Перейти до покупок</button>
+      </div>
+
+      <div id="cartContent" class="cart-content">
+        <ul id="cartItems"></ul>
+
+        <div class="cart-footer">
+          <div class="cart-total-row">
+            <span>Разом:</span>
+            <strong id="cartTotal">0 ₴</strong>
+          </div>
+          <button id="buyCartButton" type="button" class="primary-button">Оформити замовлення</button>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <section class="promo-hero" aria-label="Автомобілі з пробігом Volkswagen">
+        <h1>Автомобілі з пробігом Volkswagen</h1>
+        <p>Перевірені авто. Надійні угоди. Вигідні ціни.</p>
       </section>
 
-      <section class="test" aria-label="Корисні розділи">
-        <div class="credit">
-          <h1>Кредит</h1>
-          <p>Розрахуйте вигідні умови автокредиту онлайн</p>
-          <a href="credit.html"><button type="button">Дізнатися більше</button></a>
+      <div id="imageViewerOverlay" class="image-viewer-overlay" aria-hidden="true">
+        <div class="image-viewer" role="dialog" aria-modal="true" aria-label="Збільшене фото автомобіля">
+          <button id="closeImageViewerButton" class="image-viewer-close" type="button" aria-label="Закрити збільшене фото">×</button>
+          <img id="imageViewerImage" src="" alt="Збільшене фото автомобіля" />
         </div>
-        <div class="tradein">
-          <h1>Trade‑in</h1>
-          <p>Обмін старого авто на нове з доплатою</p>
-          <a href="traiden.html"><button type="button">Дізнатися більше</button></a>
-        </div>
-        <div class="service">
-          <h1>Service</h1>
-          <p>Запис на технічне обслуговування та ремонт</p>
-          <a href="servise.html"><button type="button">Дізнатися більше</button></a>
-        </div>
-      </section>
-
-      <section style="max-width:1100px;margin:0 auto;padding:0 16px;">
-        <label for="currencySelect" style="font-weight:600;">Валюта цін:</label>
-        <select id="currencySelect" aria-label="Оберіть валюту">
-        </select>
-        <span id="rateInfo" style="margin-left:12px;opacity:0.7;"></span>
-      </section>
+      </div>
 
       <section class="main-content" id="productsGrid" aria-live="polite">
       </section>
 
-      <section class="grid-container" style="max-width:100px;margin:0 auto;">
+      <section class="grid-container">
         <div class="grid-item">
           <h3>Можливості розміщення</h3>
           <ul>
@@ -108,13 +138,30 @@
         </div>
       </section>
     </main>
-
+    
     <footer>
       <div class="footer-content" id="contacts">
-        <p>&copy; 2025 Мій сайт. Всі права захищено</p>
-        <p>пошта: volkswagen@gmail.com</p>
+        <div class="footer-text">
+          <p>&copy; 2025 Мій сайт. Всі права захищено</p>
+          <p>пошта: vw.autoshop.ua@gmail.com</p>
+        </div>
+        <div class="social-links" aria-label="Соціальні мережі">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <img src="images/futer image/f.png" alt="Facebook" />
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <img src="images/futer image/inst.png" alt="Instagram" />
+          </a>
+          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <img src="images/futer image/in.png" alt="LinkedIn" />
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <img src="images/futer image/t.png" alt="Twitter" />
+          </a>
+        </div>
       </div>
     </footer>
+
 
 
     <script src="index.js" defer></script>
