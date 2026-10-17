@@ -83,7 +83,7 @@ header {
 }
 
 main {
-  background-image: linear-gradient(rgba(10, 24, 38, 0.6), rgba(10, 24, 38, 0.6)), url("images/pexels-mikebirdy-188777.jpg");
+  background-image: linear-gradient(rgba(10, 24, 38, 0.6), rgba(10, 24, 38, 0.6)), url("images/pexels-mikebirdy-188777.webp");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

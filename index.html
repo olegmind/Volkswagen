@@ -10,7 +10,7 @@
     <header>
       <div class="content">
         <div class="logo">
-          <img src="https://car-logos.b-cdn.net/wp-content/uploads/2023/03/volkswagen-logo-2020-present-1024x742.webp" alt="Логотип Volkswagen" />
+          <img src="images/volkswagen-logo.webp" alt="Логотип Volkswagen" width="75" height="54" />
         </div>
         <input type="checkbox" id="menuToggle" class="menu-toggle" aria-hidden="true" />
         <label class="burger" for="menuToggle" aria-label="Відкрити меню">
@@ -31,7 +31,7 @@
           <div class="currency-panel-header">
             <label for="currencySelect">Валюта цін:</label>
             <select id="currencySelect" aria-label="Оберіть валюту"></select>
-            <span id="rateInfo"></span>
+            <span id="rateInfo" role="status" aria-live="polite"></span>
           </div>
 
           <div class="header-cart-area">

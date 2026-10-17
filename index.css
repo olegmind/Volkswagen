@@ -147,6 +147,12 @@ header {
   display: none;
 }
 
+#rateInfo.is-fallback {
+  display: inline;
+  color: #ffe08a;
+  font-size: 12px;
+}
+
 .header-cart-area {
   display: flex;
   align-items: center;
@@ -849,6 +855,10 @@ footer {
     display: inline;
     color: rgba(255, 255, 255, 0.9);
     font-size: 13px;
+  }
+
+  #rateInfo.is-fallback {
+    color: #ffe08a;
   }
 
   .header-cart-text {

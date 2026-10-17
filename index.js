@@ -1,24 +1,24 @@
 const products = [
   [17000, "1.jpg"],
-  [15000, "2.jpeg"],
+  [15000, "2.webp"],
   [12000, "3.jpg"],
   [16000, "4.jpg"],
   [10000, "5.jpg"],
   [17000, "6.jpg"],
   [18000, "7.jpg"],
   [12000, "8.jpg"],
-  [18500, "pexels-234741447-12499702.jpg"],
-  [16200, "pexels-ardit-mbrati-216809103-16646416.jpg"],
-  [14300, "pexels-can-acikgoz-2151734019-31825291.jpg"],
-  [19800, "pexels-clement-proust-363898785-21880068.jpg"],
-  [17600, "pexels-connorscottmcmanus-15240993.jpg"],
-  [15400, "pexels-hellojoshwithers-16625624.jpg"],
-  [22100, "pexels-introspectivedsgn-4713812.jpg"],
-  [16900, "pexels-o-click-fotografias-2163822876-39218495.jpg"],
-  [12800, "pexels-pexels-user-399617868-14840571.jpg"],
-  [20700, "pexels-tshepang-dd2-2159673654-36674013.jpg"],
-  [23900, "pexels-vlasceanu-20027400.jpg"],
-  [14300, "pexels-can-acikgoz-2151734019-31825291.jpg"],
+  [18500, "pexels-234741447-12499702.webp"],
+  [16200, "pexels-ardit-mbrati-216809103-16646416.webp"],
+  [14300, "pexels-can-acikgoz-2151734019-31825291.webp"],
+  [19800, "pexels-clement-proust-363898785-21880068.webp"],
+  [17600, "pexels-connorscottmcmanus-15240993.webp"],
+  [15400, "pexels-hellojoshwithers-16625624.webp"],
+  [22100, "pexels-introspectivedsgn-4713812.webp"],
+  [16900, "pexels-o-click-fotografias-2163822876-39218495.webp"],
+  [12800, "pexels-pexels-user-399617868-14840571.webp"],
+  [20700, "pexels-tshepang-dd2-2159673654-36674013.webp"],
+  [23900, "pexels-vlasceanu-20027400.webp"],
+  [14300, "pexels-can-acikgoz-2151734019-31825291.webp"],
   [12000, "8.jpg"],
 ].map((x, i) => ({
   id: i + 1,
@@ -49,6 +49,7 @@ const closeImageViewerButton = document.getElementById("closeImageViewerButton")
 let cart = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 let currentCurrency = "USD";
 let ratesUAH = { UAH: 1 };
+let usingFallbackRates = false;
 
 const formatters = ["USD", "EUR", "UAH", "GBP"].reduce(
   (a, c) => (
@@ -126,7 +127,7 @@ function renderProducts(currency = "USD") {
     .map(
       (p) => `
     <div class="box">
-      <img src="${p.img}" alt="${p.title}" loading="lazy" onerror="this.style.opacity=0;this.nextElementSibling.style.marginTop='0'"/>
+      <img src="${p.img}" alt="${p.title}" loading="lazy" decoding="async" onerror="this.style.opacity=0;this.nextElementSibling.style.marginTop='0'"/>
       <p>${p.title}</p>
       <p class="price" data-price-usd="${p.priceUSD}">${fmt(
         p.priceUSD,
@@ -156,9 +157,12 @@ function updatePrices(currency) {
   });
 
   if (rateInfo) {
-    if (currency === "UAH" && ratesUAH.USD)
+    rateInfo.classList.toggle("is-fallback", usingFallbackRates);
+    if (usingFallbackRates) {
+      rateInfo.textContent = "НБУ недоступний — резервні курси";
+    } else if (currency === "UAH" && ratesUAH.USD) {
       rateInfo.textContent = `Курс НБУ: 1 USD = ${ratesUAH.USD.toFixed(2)} UAH`;
-    else if (ratesUAH[currency] && ratesUAH.USD) {
+    } else if (ratesUAH[currency] && ratesUAH.USD) {
       const cross = ratesUAH.USD / ratesUAH[currency];
       rateInfo.textContent = `Орієнтовно: 1 USD ≈ ${cross.toFixed(4)} ${currency}`;
     } else {
@@ -172,11 +176,23 @@ function updatePrices(currency) {
 async function loadRates() {
   try {
     const resp = await fetch("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json");
-    if (!resp.ok) throw new Error("Network response was not ok");
+    if (!resp.ok) throw new Error(`NBU API returned HTTP ${resp.status}`);
     const data = await resp.json();
-    data.forEach((i) => (ratesUAH[i.cc] = Number(i.rate)));
+    const fetchedRates = { UAH: 1 };
+    data.forEach((item) => {
+      const rate = Number(item.rate);
+      if (item.cc && Number.isFinite(rate) && rate > 0) {
+        fetchedRates[item.cc] = rate;
+      }
+    });
+    if (!["USD", "EUR", "GBP"].every((currency) => fetchedRates[currency])) {
+      throw new Error("NBU API response is missing a supported currency rate");
+    }
+    ratesUAH = fetchedRates;
   } catch (e) {
     ratesUAH = { USD: 40, EUR: 43, GBP: 50, UAH: 1 };
+    usingFallbackRates = true;
+    console.warn("Не вдалося завантажити курси НБУ. Використовуються резервні курси.", e);
   }
 }
 
