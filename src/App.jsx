@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import facebookIcon from "../images/futer image/f.png";
 import instagramIcon from "../images/futer image/inst.png";
 import linkedinIcon from "../images/futer image/in.png";
@@ -448,6 +449,7 @@ export default function App() {
       )}
 
       <Footer />
+      <SpeedInsights />
     </>
   );
 }
